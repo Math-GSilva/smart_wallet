@@ -31,5 +31,8 @@ class Categoria {
       'descricao': descricao,
     };
   }
+
+  @override
+  String toString() => descricao;
 }
 

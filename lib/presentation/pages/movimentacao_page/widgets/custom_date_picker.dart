@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomDatePicker extends StatelessWidget {
   final String title;
   final String hint;
   final Color corTitle;
   final Color corTexto;
   final TextEditingController controller;
-  const CustomTextField({super.key, this.title = "", this.hint = "", this.corTexto = Colors.white, this.corTitle = Colors.white, required this.controller});
+  const CustomDatePicker({super.key, this.title = "", this.hint = "", this.corTexto = Colors.white, this.corTitle = Colors.white, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +38,23 @@ class CustomTextField extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextField(
-                        inputFormatters: title == "Valor" ? [
-                          FilteringTextInputFormatter.digitsOnly,
-                          CurrencyPtBrInputFormatter()
-                        ] : [],
+                        focusNode: AlwaysDisabledFocusNode(),
                         controller: controller,
+                        onTap: (){
+                          if(title == "Data"){
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+
+                            ).then((pickedDate) {
+                              if(pickedDate != null) {
+                                controller.text = DateFormat("dd/MM/yyyy").format(pickedDate);
+                              }
+                            });
+                          }
+                        },
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.transparent,
@@ -65,19 +76,7 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-class CurrencyPtBrInputFormatter extends TextInputFormatter {
-
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if(newValue.selection.baseOffset == 0){
-      return newValue;
-    }
-
-    double value = double.parse(newValue.text);
-    final formatter = new NumberFormat("#,##0.00", "pt_BR");
-    String newText = "R\$ " + formatter.format(value/100);
-
-    return newValue.copyWith(
-        text: newText,
-        selection: new TextSelection.collapsed(offset: newText.length));
-  }
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }
