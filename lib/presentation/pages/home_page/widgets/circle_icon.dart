@@ -4,7 +4,7 @@ class CircleIcon extends StatelessWidget {
   final IconData icon;
   final Color color;
   final double size;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   const CircleIcon({super.key, required this.color, required this.icon, required this.size, required this.onPressed});
 
   @override
