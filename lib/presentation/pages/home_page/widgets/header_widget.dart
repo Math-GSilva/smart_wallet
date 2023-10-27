@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/movimentacao_screen.dart';
+import 'package:smart_wallet/presentation/utils/tipo_movimentacao.dart';
 
 import 'circle_icon.dart';
 
-class HeaderIcon extends StatelessWidget {
-  const HeaderIcon({super.key});
+class HeaderWidget extends StatelessWidget {
+  final double valorTotal;
+  const HeaderWidget({super.key, required this.valorTotal});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class HeaderIcon extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        "R\$ 1.400,00",
+                        "R\$ ${valorTotal.toStringAsFixed(2).replaceAll(".", ",")}",
                         style: TextStyle(color: Colors.white, fontSize: 56),
                       ),
                       Text(
@@ -74,14 +76,19 @@ class HeaderIcon extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const MovimentacaoScreen()),
+                            MaterialPageRoute(builder: (context) => const MovimentacaoScreen(tipo: TipoMovimentacao.entrada,)),
                           );
                         }),
                     CircleIcon(
                         color: Colors.red,
                         icon: Icons.arrow_downward_outlined,
                         size: 50,
-                        onPressed: () {})
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const MovimentacaoScreen(tipo: TipoMovimentacao.saida,)),
+                          );
+                        })
                   ],
                 ),
               )

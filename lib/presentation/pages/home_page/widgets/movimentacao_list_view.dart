@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:smart_wallet/persistance/movimentacao_repository_impl.dart';
 
+import '../../../../domain/model/movimentacao_model.dart';
 import 'card_movimentacao.dart';
 
-class MovimentacaoListView extends StatelessWidget {
+class MovimentacaoListView extends StatefulWidget {
   const MovimentacaoListView({super.key});
+
+  @override
+  State<MovimentacaoListView> createState() => _MovimentacaoListViewState();
+}
+
+class _MovimentacaoListViewState extends State<MovimentacaoListView> {
+  List<Movimentacao> lista = [];
+
+  @override
+  void initState() {
+    MovimentacaoRepository().getAll().then((value){
+      if(value.isNotEmpty){
+        setState(() {
+          lista = value ?? [];
+        });
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +47,9 @@ class MovimentacaoListView extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: 20,
+              itemCount: lista.length,
               itemBuilder: (context, index) {
-                return CardMovimentacao();
+                return CardMovimentacao(movimentacao: lista[index]);
               },
             ),
           )

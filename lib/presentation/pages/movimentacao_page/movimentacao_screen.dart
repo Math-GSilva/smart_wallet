@@ -4,12 +4,14 @@ import 'package:smart_wallet/presentation/pages/common_widgets/custom_bottom_nav
 import 'package:smart_wallet/presentation/pages/movimentacao_page/widgets/custom_date_picker.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/widgets/custom_dropdown.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/widgets/custom_text_field.dart';
+import 'package:smart_wallet/presentation/utils/tipo_movimentacao.dart';
 
 import '../../../domain/model/categoria_model.dart';
 import 'controller_movimentacao_page.dart';
 
 class MovimentacaoScreen extends StatefulWidget {
-  const MovimentacaoScreen({super.key});
+  final TipoMovimentacao tipo;
+  const MovimentacaoScreen({super.key, required this.tipo});
 
   @override
   State<MovimentacaoScreen> createState() => _MovimentacaoScreenState();
@@ -54,7 +56,7 @@ class _MovimentacaoScreenState extends State<MovimentacaoScreen> {
               CustomTextField(
                   title: "Valor",
                   hint: "R\$0,00",
-                  corTexto: Colors.green,
+                  corTexto: widget.tipo == TipoMovimentacao.entrada ? Colors.green : Colors.red,
                   controller: controller.controllerValor),
               Padding(
                 padding:
@@ -68,7 +70,7 @@ class _MovimentacaoScreenState extends State<MovimentacaoScreen> {
                     ),
                   ),
                   onPressed: () async {
-                    controller.salvarMovimenacao(context);
+                    controller.salvarMovimenacao(context, widget.tipo );
                   },
                   child: const Text(
                     'Salvar',

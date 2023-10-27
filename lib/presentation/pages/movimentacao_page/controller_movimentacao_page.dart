@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
+import 'package:smart_wallet/presentation/utils/tipo_movimentacao.dart';
 
 import '../../../domain/model/categoria_model.dart';
 import '../../../domain/model/movimentacao_model.dart';
 import '../../../persistance/movimentacao_repository_impl.dart';
+import '../../utils/lista_categorias.dart';
 
 class ControllerMovimentacao{
   TextEditingController controllerDescricao = TextEditingController(),
       controllerData = TextEditingController(),
       controllerValor = TextEditingController();
-  List<Categoria> listaCategorias = List.generate(10, (index) => Categoria(id: index, descricao: "Categoria ${index}"));
-  Categoria? categoriaSelecionada;
+  Categoria categoriaSelecionada = categoriasTeste.first;
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -34,7 +36,9 @@ class ControllerMovimentacao{
       showInSnackBar("Informe uma data!", Colors.red, context);
       valid = false;
     } else if (double.parse(
-        controllerValor.text.replaceAll("R\$ ", "").replaceAll(",", ".")) ==
+        controllerValor.text.replaceAll("R\$ ", "").replaceAll(".", "").replaceAll(",", ".").isEmpty
+            ? "0"
+            : controllerValor.text.replaceAll("R\$ ", "").replaceAll(".", "").replaceAll(",", ".")) ==
         0) {
       showInSnackBar("Informe um valor válido!", Colors.red, context);
       valid = false;
@@ -42,20 +46,27 @@ class ControllerMovimentacao{
     return valid;
   }
 
-  Future<void> salvarMovimenacao(BuildContext context) async {
+  Future<void> salvarMovimenacao(BuildContext context, TipoMovimentacao tipo) async {
     if (validaCampos(context)) {
+      double valor = double.tryParse(
+          controllerValor.text.replaceAll("R\$ ", "").replaceAll(".", "").replaceAll(",", ".")) ??
+          0;
+      if(tipo == TipoMovimentacao.saida){
+        valor = -valor;
+      }
       await MovimentacaoRepository().insert(
           Movimentacao(
               id: null,
-              valor: double.tryParse(
-                  controllerValor.text.replaceAll("R\$ ", "").replaceAll(",", ".")) ??
-                  0,
+              valor: valor,
               tipo: "1",
               descricao: controllerDescricao.text,
               data: controllerData.text,
-              categoriaId: 1));
+              categoriaId: categoriaSelecionada.id));
       showInSnackBar("Movimentação salva com sucesso!", Colors.green, context);
-      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
     }
   }
 }

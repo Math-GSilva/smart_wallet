@@ -1,0 +1,4 @@
+enum TipoMovimentacao {
+  entrada,
+  saida
+}

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:smart_wallet/presentation/utils/lista_categorias.dart';
+
+import '../../../../domain/model/movimentacao_model.dart';
 
 class CardMovimentacao extends StatelessWidget {
-  const CardMovimentacao({super.key});
+  final Movimentacao movimentacao;
+  const CardMovimentacao({super.key, required this.movimentacao});
 
   @override
   Widget build(BuildContext context) {
@@ -13,28 +18,30 @@ class CardMovimentacao extends StatelessWidget {
             Container(
               width: 35,
               height: 35,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.red,
+                color: movimentacao.valor > 0 ? Colors.green : Colors.red,
               ),
               child: Icon(
-                Icons.arrow_downward_outlined,
+                movimentacao.valor > 0 ? Icons.arrow_upward_outlined : Icons.arrow_downward_outlined,
                 color: Colors.white,
                 size: 20,
               ),
             ),
-            const Expanded(
+            Expanded(
                 flex: 4,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Row(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Delivery", textAlign: TextAlign.left ,style: TextStyle(color: Colors.white, fontSize: 14)),
-                          Text("Comida", textAlign: TextAlign.left ,style: TextStyle(color: Colors.grey, fontSize: 12)),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(categoriasTeste[movimentacao.categoriaId -1].descricao,maxLines: 1,overflow: TextOverflow.ellipsis, textAlign: TextAlign.left ,style: TextStyle(color: Colors.white, fontSize: 14)),
+                            Text(movimentacao.descricao,maxLines: 2,overflow: TextOverflow.ellipsis, textAlign: TextAlign.left ,style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -44,12 +51,14 @@ class CardMovimentacao extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(349.toStringAsFixed(2), textAlign: TextAlign.right ,style: const TextStyle(color: Colors.red, fontSize: 14)),
-                        const Text("Hoje", textAlign: TextAlign.right ,style: TextStyle(color: Colors.grey, fontSize: 12)),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text("R\$ ${movimentacao.valor.toStringAsFixed(2)}", textAlign: TextAlign.right ,style: TextStyle(color: movimentacao.valor > 0 ? Colors.green : Colors.red, fontSize: 14)),
+                          Text(movimentacao.data, textAlign: TextAlign.right ,style: TextStyle(color: Colors.grey, fontSize: 12)),
+                        ],
+                      ),
                     )
                   ],
                 ))
