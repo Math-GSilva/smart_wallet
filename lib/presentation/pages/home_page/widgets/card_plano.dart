@@ -14,7 +14,7 @@ class CardPlanoWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10, right: 15 ),
       child: SizedBox(
         height: 100,
-        width: 210,
+        width: MediaQuery.of(context).size.width,
         child: Card(
           color: const Color(0xFF121e3c),
           child: Padding(

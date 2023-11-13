@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_wallet/data/DBHelper.dart';
 import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/movimentacao_screen.dart';
+import 'package:smart_wallet/presentation/pages/planos_page/planos_screen.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: PlanosScreen()/*HomePage()*/,
     );
   }
 }
