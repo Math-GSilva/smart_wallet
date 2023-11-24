@@ -94,8 +94,6 @@ class HeaderWidget extends StatelessWidget {
               )
             ],
           )),
-          //Expanded(child: child),
-          //Expanded(child: child),
         ],
       ),
     );

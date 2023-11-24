@@ -45,9 +45,9 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color(0xff10172c),
         body: Column(
           children: [
-            Expanded(flex: 7, child: HeaderWidget(valorTotal: valorTotal,)),
+            Expanded(flex: 7, child: HeaderWidget(valorTotal: valorTotal)),
             Expanded(flex: 4, child: PlanosListView()),
-            Expanded(flex: 6, child: MovimentacaoListView())
+            Expanded(flex: 6, child: MovimentacaoListView(showLabels: true,))
           ],
         ),
       ),

@@ -5,7 +5,8 @@ import '../../../../domain/model/movimentacao_model.dart';
 import 'card_movimentacao.dart';
 
 class MovimentacaoListView extends StatefulWidget {
-  const MovimentacaoListView({super.key});
+  final bool showLabels;
+  const MovimentacaoListView({this.showLabels = false, super.key});
 
   @override
   State<MovimentacaoListView> createState() => _MovimentacaoListViewState();
@@ -18,8 +19,11 @@ class _MovimentacaoListViewState extends State<MovimentacaoListView> {
   void initState() {
     MovimentacaoRepository().getAll().then((value){
       if(value.isNotEmpty){
+        for(int i = 1; i< 150; i++){
+          lista.addAll(value);
+        }
         setState(() {
-          lista = value ?? [];
+          lista = lista ?? [];
         });
       }
     });
@@ -32,6 +36,7 @@ class _MovimentacaoListViewState extends State<MovimentacaoListView> {
       padding: EdgeInsets.only(left: 16, right: 16),
       child: Column(
         children: [
+          if(widget.showLabels)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

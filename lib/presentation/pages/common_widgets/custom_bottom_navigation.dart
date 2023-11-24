@@ -16,7 +16,7 @@ class CustomBottomNavigation extends StatelessWidget {
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey.shade700,
         onTap: (_) {},
-        currentIndex: 2,
+        currentIndex: 1,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.folder, size: 40), label: ""),
