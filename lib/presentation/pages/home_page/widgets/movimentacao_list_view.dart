@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_wallet/persistance/movimentacao_repository_impl.dart';
+import 'package:smart_wallet/presentation/pages/transacoes_page/transacoes_screen.dart';
 
 import '../../../../domain/model/movimentacao_model.dart';
 import 'card_movimentacao.dart';
@@ -19,11 +20,8 @@ class _MovimentacaoListViewState extends State<MovimentacaoListView> {
   void initState() {
     MovimentacaoRepository().getAll().then((value){
       if(value.isNotEmpty){
-        for(int i = 1; i< 150; i++){
-          lista.addAll(value);
-        }
         setState(() {
-          lista = lista ?? [];
+          lista = value;
         });
       }
     });
@@ -33,7 +31,7 @@ class _MovimentacaoListViewState extends State<MovimentacaoListView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16),
+      padding: const EdgeInsets.only(left: 16, right: 16),
       child: Column(
         children: [
           if(widget.showLabels)
@@ -43,9 +41,14 @@ class _MovimentacaoListViewState extends State<MovimentacaoListView> {
               Text("Transações Recentes",
                   style:
                   TextStyle(color: Colors.white, fontSize: 18)),
-              Text("Ver tudo",
-                  style:
-                  TextStyle(color: Colors.white, fontSize: 18))
+              GestureDetector(
+                child: Text("Ver tudo",
+                    style:
+                    TextStyle(color: Colors.white, fontSize: 18)),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const TransacoesScreen()));
+                },
+              )
             ],
           ),
           Expanded(

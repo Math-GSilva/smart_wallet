@@ -28,7 +28,9 @@ class HeaderWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
                       icon: Icon(
                         Icons.more_horiz,
                         color: Colors.white,

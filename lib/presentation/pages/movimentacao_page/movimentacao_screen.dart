@@ -30,15 +30,14 @@ class _MovimentacaoScreenState extends State<MovimentacaoScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text(
-            "ADICIONAR ENTRADA",
-            style: TextStyle(
+          title: Text(
+            widget.tipo == TipoMovimentacao.entrada ? "ADICIONAR ENTRADA" : "ADICIONAR SAÍDA",
+            style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           ),
           centerTitle: true,
         ),
-        bottomNavigationBar: const CustomBottomNavigation(),
-        backgroundColor: Color(0xff10172c),
+        backgroundColor: const Color(0xff10172c),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -63,7 +62,7 @@ class _MovimentacaoScreenState extends State<MovimentacaoScreen> {
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff0249dd),
+                    backgroundColor: const Color(0xff0249dd),
                     minimumSize: const Size.fromHeight(50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),

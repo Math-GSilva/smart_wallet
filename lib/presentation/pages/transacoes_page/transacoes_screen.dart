@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../persistance/movimentacao_repository_impl.dart';
 import '../../utils/tipo_movimentacao.dart';
 import '../common_widgets/custom_bottom_navigation.dart';
 import '../home_page/widgets/circle_icon.dart';
@@ -13,20 +14,23 @@ class TransacoesScreen extends StatefulWidget {
   State<TransacoesScreen> createState() => _TransacoesScreenState();
 }
 
+
+
 class _TransacoesScreenState extends State<TransacoesScreen> {
+  double valorTotal = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
-            canvasColor: Color(0xFF121e3c),
-            primaryColor: Color(0xFF121e3c),
-            splashColor: Color(0xff10172c),
+            canvasColor: const Color(0xFF121e3c),
+            primaryColor: const Color(0xFF121e3c),
+            splashColor: const Color(0xff10172c),
           ),
-          child: const CustomBottomNavigation(),
+          child: const CustomBottomNavigation(index: 1),
         ),
-        backgroundColor: Color(0xff10172c),
+        backgroundColor: const Color(0xff10172c),
         body: Column(
           children: [
             Expanded(
@@ -50,13 +54,13 @@ class _TransacoesScreenState extends State<TransacoesScreen> {
                                 children: [
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.more_horiz,
                                         color: Colors.white,
                                       )),
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.notifications,
                                         color: Colors.white,
                                       )),
@@ -71,7 +75,7 @@ class _TransacoesScreenState extends State<TransacoesScreen> {
                                       Column(
                                         children: [
                                           Text(
-                                            "R\$ ${100000.toStringAsFixed(2).replaceAll(".", ",")}",
+                                            "R\$ ${valorTotal.toStringAsFixed(2).replaceAll(".", ",")}",
                                             style: TextStyle(color: Colors.white, fontSize: 46),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
@@ -124,12 +128,23 @@ class _TransacoesScreenState extends State<TransacoesScreen> {
                   ),
                 )
             ),
-            Expanded(
+            const Expanded(
                 flex: 6,
                 child: MovimentacaoListView())
           ],
         ),
       ),
     );;
+  }
+
+  @override
+  void initState() {
+    MovimentacaoRepository().getAll().then((value) {
+      if(value.isNotEmpty){
+        setState(() {
+          valorTotal = value.map((e) => e.valor).reduce((value, element) => value + element);
+        });
+      }
+    });
   }
 }

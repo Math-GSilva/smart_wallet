@@ -67,6 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10))
                       ),
                       child: TextField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         controller: senhaController,
                         decoration: InputDecoration(
                           filled: true,
@@ -90,6 +93,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10))
                       ),
                       child: TextField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         controller: confirmSenhaController,
                         decoration: InputDecoration(
                           filled: true,

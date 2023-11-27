@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
 import 'package:smart_wallet/presentation/pages/login_page/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,9 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
     TextEditingController senhaController = TextEditingController();
     return SafeArea(
         child: Scaffold(
-          backgroundColor: Color(0xff10172c),
+          backgroundColor: const Color(0xff10172c),
           body:Padding(
-            padding: EdgeInsets.symmetric(vertical: 40),
+            padding: const EdgeInsets.symmetric(vertical: 40),
             child: Center(
               child: SingleChildScrollView(
                 child: Column(
@@ -40,18 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             border: Border.all(
                               color: Colors.white,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(10))
+                            borderRadius: const BorderRadius.all(Radius.circular(10))
                         ),
                         child: TextField(
                           controller: emailController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.transparent,
                             border: InputBorder.none,
                             hintText: "E-mail...",
                             hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
                           ),
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
@@ -63,18 +65,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             border: Border.all(
                               color: Colors.white,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(10))
+                            borderRadius: const BorderRadius.all(Radius.circular(10))
                         ),
                         child: TextField(
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
                           controller: senhaController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.transparent,
                             border: InputBorder.none,
                             hintText: "Senha...",
                             hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
                           ),
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
@@ -85,27 +90,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          backgroundColor: Color(0xff0249dd),
+                          backgroundColor: const Color(0xff0249dd),
                           foregroundColor: Colors.white,
                           minimumSize: const Size.fromHeight(50), // NEW
                         ),
                         onPressed: () async {
-                          var cred;
                           try{
                             var cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
                               email: emailController.text,
                               password: senhaController.text,
                             );
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
                           }catch(e){
                             if(e is FirebaseAuthException){
-                              if(e.code == "wrong-password"){
+                              if(e.code == "wrong-password" || e.code == "user-not-found"){
                                 LoginController().showMySnackbar(context, "Senha ou usuário inválido", Colors.red);
                                 return;
                               }
                             }
-                            log(e.toString());
+                            LoginController().showMySnackbar(context, "Erro ao efetuar login", Colors.red);
+                            return;
                           }
-                          log(cred.toString());
                         },
                         child: const Text(
                           'Login',
