@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:smart_wallet/presentation/utils/lista_categorias.dart';
 
+import '../../../../domain/model/categoria_model.dart';
 import '../../../../domain/model/movimentacao_model.dart';
 
 class CardMovimentacao extends StatelessWidget {
   final Movimentacao movimentacao;
-  const CardMovimentacao({super.key, required this.movimentacao});
+  final List<Categoria> categorias;
+  const CardMovimentacao({super.key, required this.movimentacao, required this.categorias});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class CardMovimentacao extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(categoriasTeste[movimentacao.categoriaId -1].descricao,maxLines: 1,overflow: TextOverflow.ellipsis, textAlign: TextAlign.left ,style: TextStyle(color: Colors.white, fontSize: 14)),
+                            Text(categorias.firstWhere((element) => element.id == movimentacao.categoriaId).descricao,maxLines: 1,overflow: TextOverflow.ellipsis, textAlign: TextAlign.left ,style: TextStyle(color: Colors.white, fontSize: 14)),
                             Text(movimentacao.descricao,maxLines: 2,overflow: TextOverflow.ellipsis, textAlign: TextAlign.left ,style: TextStyle(color: Colors.grey, fontSize: 12)),
                           ],
                         ),

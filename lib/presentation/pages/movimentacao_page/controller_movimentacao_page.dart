@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:smart_wallet/Services/movimentacao_service.dart';
 import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
 import 'package:smart_wallet/presentation/utils/tipo_movimentacao.dart';
 
 import '../../../domain/model/categoria_model.dart';
 import '../../../domain/model/movimentacao_model.dart';
 import '../../../persistance/movimentacao_repository_impl.dart';
-import '../../utils/lista_categorias.dart';
 
 class ControllerMovimentacao{
   TextEditingController controllerDescricao = TextEditingController(),
       controllerData = TextEditingController(),
       controllerValor = TextEditingController();
-  Categoria categoriaSelecionada = categoriasTeste.first;
+  Categoria? categoriaSelecionada;
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -54,14 +54,14 @@ class ControllerMovimentacao{
       if(tipo == TipoMovimentacao.saida){
         valor = -valor;
       }
-      await MovimentacaoRepository().insert(
+      await MovimentacaoService().addMovimentacao(
           Movimentacao(
-              id: null,
-              valor: valor,
-              tipo: "1",
-              descricao: controllerDescricao.text,
-              data: controllerData.text,
-              categoriaId: categoriaSelecionada.id));
+          id: null,
+          valor: valor,
+          tipo: "1",
+          descricao: controllerDescricao.text,
+          data: controllerData.text,
+          categoriaId: categoriaSelecionada!.id));
       showInSnackBar("Movimentação salva com sucesso!", Colors.green, context);
       Navigator.push(
         context,

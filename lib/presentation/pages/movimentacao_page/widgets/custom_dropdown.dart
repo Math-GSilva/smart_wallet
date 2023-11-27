@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/controller_movimentacao_page.dart';
-import 'package:smart_wallet/presentation/utils/lista_categorias.dart';
 
 import '../../../../domain/model/categoria_model.dart';
 
@@ -12,6 +11,7 @@ class CustomDropDown<T> extends StatefulWidget {
   final Color corTitle;
   final Color corTexto;
   final ControllerMovimentacao controller;
+  final List<Categoria> categorias;
 
   CustomDropDown({
     Key? key,
@@ -20,6 +20,7 @@ class CustomDropDown<T> extends StatefulWidget {
     this.corTexto = Colors.white,
     this.corTitle = Colors.white,
     required this.controller,
+    required this.categorias,
   }) : super(key: key);
 
   @override
@@ -72,7 +73,7 @@ class _CustomDropDownState<T> extends State<CustomDropDown<T>> {
                               dropdownColor: const Color.fromARGB(255, 20, 36, 74),
                               borderRadius: BorderRadius.circular(10),
                               value: widget.controller.categoriaSelecionada,
-                              items: categoriasTeste.map((Categoria value) {
+                              items: widget.categorias.map((Categoria value) {
                                 return DropdownMenuItem<Categoria>(
                                   value: value,
                                   child: Container(

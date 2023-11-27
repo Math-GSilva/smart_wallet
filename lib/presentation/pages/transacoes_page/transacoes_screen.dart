@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../Services/movimentacao_service.dart';
+import '../../../domain/model/movimentacao_model.dart';
 import '../../../persistance/movimentacao_repository_impl.dart';
 import '../../utils/tipo_movimentacao.dart';
 import '../common_widgets/custom_bottom_navigation.dart';
@@ -74,11 +76,29 @@ class _TransacoesScreenState extends State<TransacoesScreen> {
                                     children: [
                                       Column(
                                         children: [
-                                          Text(
-                                            "R\$ ${valorTotal.toStringAsFixed(2).replaceAll(".", ",")}",
-                                            style: TextStyle(color: Colors.white, fontSize: 46),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                          StreamBuilder<List<Movimentacao>>(
+                                            stream: MovimentacaoService().getMovimentacoes(),
+                                            builder: (context, snapshotMovimentacoes) {
+                                              if (snapshotMovimentacoes.hasError) {
+                                                return Text('Erro: ${snapshotMovimentacoes.error}');
+                                              }
+
+                                              if (!snapshotMovimentacoes.hasData) {
+                                                return CircularProgressIndicator();
+                                              }
+
+                                              final List<Movimentacao> listaMovimentacoes = snapshotMovimentacoes.data!;
+                                              double valorTotal = listaMovimentacoes
+                                                  .map((movimentacao) => movimentacao.valor)
+                                                  .fold(0, (previousValue, element) => previousValue + element);
+
+                                              return Text(
+                                                "R\$ ${valorTotal.toStringAsFixed(2).replaceAll(".", ",")}",
+                                                style: TextStyle(color: Colors.white, fontSize: 46),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              );
+                                            },
                                           ),
                                           Text(
                                             "Balanço",
@@ -134,17 +154,6 @@ class _TransacoesScreenState extends State<TransacoesScreen> {
           ],
         ),
       ),
-    );;
-  }
-
-  @override
-  void initState() {
-    MovimentacaoRepository().getAll().then((value) {
-      if(value.isNotEmpty){
-        setState(() {
-          valorTotal = value.map((e) => e.valor).reduce((value, element) => value + element);
-        });
-      }
-    });
+    );
   }
 }
