@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_wallet/presentation/pages/cadastro_categoria_page/cadastro_categoria_screen.dart';
 import 'package:smart_wallet/presentation/pages/common_widgets/custom_bottom_navigation.dart';
 import 'package:smart_wallet/presentation/pages/home_page/widgets/header_widget.dart';
 import 'package:smart_wallet/presentation/pages/home_page/widgets/movimentacao_list_view.dart';
@@ -56,7 +57,9 @@ class _HomePageState extends State<HomePage> {
                             "Minha conta",
                             style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,)),
                       TextButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CadastroCategoria()));
+                          },
                           child: const Text(
                             "Nova categoria",
                             style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,))
