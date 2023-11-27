@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "938520681942",
+    "firebase_url": "https://smartwalletcatolica-default-rtdb.firebaseio.com",
+    "project_id": "smartwalletcatolica",
+    "storage_bucket": "smartwalletcatolica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938520681942:android:1e038d68fb16b8ef301877",
+        "android_client_info": {
+          "package_name": "com.example.smart_wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938520681942-uak90eqp0m2ig262hsallnogadksig7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR5g4qx8r4IJGtdtzu66hBSMbKnGC5c0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938520681942-uak90eqp0m2ig262hsallnogadksig7f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

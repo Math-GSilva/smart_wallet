@@ -1,15 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_wallet/data/DBHelper.dart';
-import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
-import 'package:smart_wallet/presentation/pages/movimentacao_page/movimentacao_screen.dart';
-import 'package:smart_wallet/presentation/pages/transacoes_page/transacoes_screen.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:smart_wallet/presentation/pages/login_page/login_screen.dart';
+import 'package:smart_wallet/presentation/pages/login_page/main_screen.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dbHelper = DBHelper.instance;
   final database = await dbHelper.database;
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: TransacoesScreen(),
+      home: MainScreen(),
     );
   }
 }
