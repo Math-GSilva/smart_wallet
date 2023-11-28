@@ -25,9 +25,17 @@ class CategoriaService {
     return _categoriasCollection
         .where('idUsuario', isEqualTo: getUserId())
         .snapshots()
-        .map((snapshot) => snapshot.docs
-        .map((doc) => Categoria.fromMap(doc.data() as Map<String, dynamic>))
-        .toList());
+        .map((snapshot) {
+      List<Categoria> categorias = snapshot.docs
+          .map((doc) {
+        String idDoDocumento = doc.id;
+
+        return Categoria.fromMap(doc.data() as Map<String, dynamic>, idDoDocumento);
+      })
+          .toList();
+
+      return categorias;
+    });
   }
 
   Future<void> updateCategoria(Categoria categoria) async {

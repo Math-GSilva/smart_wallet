@@ -1,6 +1,6 @@
 class Movimentacao {
   int? id;
-  int categoriaId;
+  String categoriaId;
   String data;
   String descricao;
   double valor;
@@ -28,7 +28,6 @@ class Movimentacao {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'categoriaId': categoriaId,
       'data': data,
       'descricao': descricao,
@@ -50,7 +49,6 @@ class Movimentacao {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'categoriaId': categoriaId,
       'data': data,
       'descricao': descricao,

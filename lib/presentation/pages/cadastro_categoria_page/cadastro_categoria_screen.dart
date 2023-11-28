@@ -54,7 +54,7 @@ class _CadastroCategoriaState extends State<CadastroCategoria> {
                   return;
                 }
                 try{
-                  await CategoriaService().addCategoria(Categoria(descricao: descController.text, id: 1));
+                  await CategoriaService().addCategoria(Categoria(descricao: descController.text));
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomePage()));
                 } catch(e){
                   return;
