@@ -23,19 +23,13 @@ class CustomBottomNavigation extends StatelessWidget {
         onTap: (i) {
           switch(i){
             case 0:
-              //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const ThanksScreen()));
-              break;
-            case 1:
               Navigator.push(context, MaterialPageRoute(builder: (context)=> TransacoesScreen()));
               break;
-            case 2:
+            case 1:
               Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
               break;
-            case 3:
+            case 2:
               Navigator.push(context, MaterialPageRoute(builder: (context)=> PlanosScreen()));
-              break;
-            case 4:
-            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const ThanksScreen()));
               break;
             default:
               Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
@@ -45,15 +39,11 @@ class CustomBottomNavigation extends StatelessWidget {
         currentIndex: index,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.folder, size: 40), label: ""),
-          BottomNavigationBarItem(
               icon: Icon(Icons.compare_arrows, size: 40), label: ""),
           BottomNavigationBarItem(
               icon: Icon(Icons.monetization_on, size: 40), label: ""),
           BottomNavigationBarItem(
               icon: Icon(Icons.bar_chart, size: 40), label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings, size: 40), label: "")
         ],
       ),
     );

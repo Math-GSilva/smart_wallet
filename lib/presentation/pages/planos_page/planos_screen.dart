@@ -37,6 +37,17 @@ class _PlanosScreenState extends State<PlanosScreen> {
       ),
       backgroundColor: const Color(0xff10172c),
       appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+          ),
+        ),
         backgroundColor: const Color(0xff10172c),
         title: Text("MEUS PLANOS", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
         centerTitle: true,
@@ -102,7 +113,7 @@ class _PlanosScreenState extends State<PlanosScreen> {
           primaryColor: const Color(0xFF121e3c),
           splashColor: const Color(0xff10172c),
         ),
-        child: const CustomBottomNavigation(index: 3),
+        child: const CustomBottomNavigation(index: 2),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

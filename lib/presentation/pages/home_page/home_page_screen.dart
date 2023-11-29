@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
             primaryColor: const Color(0xFF121e3c),
             splashColor: const Color(0xff10172c),
           ),
-          child: const CustomBottomNavigation(index: 2),
+          child: const CustomBottomNavigation(index: 1),
         ),
         backgroundColor: const Color(0xff10172c),
         body: Column(

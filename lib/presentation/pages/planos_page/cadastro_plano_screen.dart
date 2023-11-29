@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_wallet/Services/categoria_service.dart';
 import 'package:smart_wallet/Services/plano_service.dart';
+import 'package:smart_wallet/domain/model/movimentacao_model.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/controller_movimentacao_page.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/widgets/custom_date_picker.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/widgets/custom_dropdown.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/widgets/custom_text_field.dart';
 
+import '../../../Services/movimentacao_service.dart';
 import '../../../domain/model/categoria_model.dart';
 import '../../../domain/model/plano_model.dart';
 import '../../utils/alerts.dart';
@@ -108,6 +110,15 @@ class _CadastroPlanoState extends State<CadastroPlano> {
                             Alerts().showInSnackBar("Informe um valor válido!", Colors.red, context);
                           }
 
+                          List<Movimentacao> movimentacoes = [];
+
+                          try{
+                            movimentacoes = await MovimentacaoService().getMovimentacoesByIntervaloDataECategoria(
+                                DateFormat('dd/MM/yyyy').parse(dataController.text.split(" - ")[0]),
+                                DateFormat('dd/MM/yyyy').parse(dataController.text.split(" - ")[1]),
+                                controller.categoriaSelecionada!.id).first;
+                          }catch(e){}
+
                           await PlanoService().addPlano(
                               Plano(
                                 descricao: descController.text,
@@ -117,7 +128,7 @@ class _CadastroPlanoState extends State<CadastroPlano> {
                                 dataInicio: DateFormat('dd/MM/yyyy').parse(dataController.text.split(" - ")[0]),
                                 dataFim: DateFormat('dd/MM/yyyy').parse(dataController.text.split(" - ")[1]),
                                 idCategoria: controller.categoriaSelecionada!.id,
-                                valorAtual: 0.0
+                                valorAtual: movimentacoes.isEmpty ? 0.0 :movimentacoes.map((e) => e.valor < 0 ? (e.valor * -1) : e.valor).reduce((a, b) => a+b)
                               ));
 
                           Navigator.pop(context);

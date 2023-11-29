@@ -33,7 +33,7 @@ class HeaderWidget extends StatelessWidget {
                         Scaffold.of(context).openDrawer();
                       },
                       icon: Icon(
-                        Icons.more_horiz,
+                        Icons.settings,
                         color: Colors.white,
                       ))
                 ],

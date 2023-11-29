@@ -4,9 +4,11 @@ import '../../../Services/movimentacao_service.dart';
 import '../../../domain/model/movimentacao_model.dart';
 import '../../../persistance/movimentacao_repository_impl.dart';
 import '../../utils/tipo_movimentacao.dart';
+import '../cadastro_categoria_page/cadastro_categoria_screen.dart';
 import '../common_widgets/custom_bottom_navigation.dart';
 import '../home_page/widgets/circle_icon.dart';
 import '../home_page/widgets/movimentacao_list_view.dart';
+import '../login_page/main_screen.dart';
 import '../movimentacao_page/movimentacao_screen.dart';
 
 class TransacoesScreen extends StatefulWidget {
@@ -19,18 +21,72 @@ class TransacoesScreen extends StatefulWidget {
 
 
 class _TransacoesScreenState extends State<TransacoesScreen> {
-  double valorTotal = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: Drawer(
+          width: (MediaQuery.of(context).size.width / 2),
+          child: Container(
+            color: const Color(0xff10172c),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Image.asset("assets/logo_clara.png", width: MediaQuery.of(context).size.width / 3),
+                      ),
+                      TextButton(
+                          onPressed: (){},
+                          child: const Text(
+                            "Minha conta",
+                            style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,)),
+                      TextButton(
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CadastroCategoria()));
+                          },
+                          child: const Text(
+                            "Nova categoria",
+                            style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,))
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          backgroundColor: const Color(0xff121e3c),
+                          foregroundColor: Colors.white,
+                          minimumSize: const Size.fromHeight(40), // NEW
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MainScreen()));
+                        },
+                        child: const Text(
+                          'Sair',
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
             canvasColor: const Color(0xFF121e3c),
             primaryColor: const Color(0xFF121e3c),
             splashColor: const Color(0xff10172c),
           ),
-          child: const CustomBottomNavigation(index: 1),
+          child: const CustomBottomNavigation(index: 0),
         ),
         backgroundColor: const Color(0xff10172c),
         body: Column(
@@ -47,21 +103,26 @@ class _TransacoesScreenState extends State<TransacoesScreen> {
                   ),
                   child: Column(
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Builder(
+                            builder: (context) => IconButton(
+                              onPressed: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              icon: const Icon(
+                                Icons.settings,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.more_horiz,
-                                        color: Colors.white,
-                                      )),
-                                ],
-                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
