@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_wallet/Services/categoria_service.dart';
+import 'package:smart_wallet/presentation/pages/planos_page/planos_screen.dart';
 
 import '../../../../Services/plano_service.dart';
 import '../../../../domain/model/categoria_model.dart';
@@ -16,11 +17,18 @@ class PlanosListView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Meus Planos", style: TextStyle(color: Colors.white, fontSize: 18)),
-                Text("Ver tudo", style: TextStyle(color: Colors.white, fontSize: 18))
+                GestureDetector(
+                  child: Text("Ver tudo",
+                      style:
+                      TextStyle(color: Colors.white, fontSize: 18)),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const PlanosScreen()));
+                  },
+                )
               ],
             ),
             StreamBuilder<List<Categoria>>(
