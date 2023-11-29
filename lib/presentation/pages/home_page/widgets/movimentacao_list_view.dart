@@ -81,6 +81,7 @@ class _MovimentacaoListViewState extends State<MovimentacaoListView> {
                         return CardMovimentacao(
                           movimentacao: listaMovimentacoes[index],
                           categorias: listaCategorias,
+                          cor: Color(0xff14142b),
                         );
                       },
                     );

@@ -55,7 +55,6 @@ class PlanoService {
       })
           .toList();
 
-      // Filtrar planos onde a dataFim é maior ou igual à data desejada
       planos = planos.where((plano) => plano.dataFim.isAfter(data)).toList();
 
       return planos;

@@ -7,12 +7,13 @@ import '../../../../domain/model/movimentacao_model.dart';
 class CardMovimentacao extends StatelessWidget {
   final Movimentacao movimentacao;
   final List<Categoria> categorias;
-  const CardMovimentacao({super.key, required this.movimentacao, required this.categorias});
+  final Color cor;
+  const CardMovimentacao({super.key, required this.movimentacao, required this.categorias, required this.cor});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: const Color(0xff10172c),
+        color: cor,
         elevation: 0,
         child: Row(
           children: [

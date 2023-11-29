@@ -35,13 +35,7 @@ class HeaderWidget extends StatelessWidget {
                       icon: Icon(
                         Icons.more_horiz,
                         color: Colors.white,
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                      )),
+                      ))
                 ],
               ),
               Row(

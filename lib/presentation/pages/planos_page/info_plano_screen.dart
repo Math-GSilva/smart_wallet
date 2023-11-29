@@ -1,40 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:smart_wallet/domain/model/movimentacao_model.dart';
+import 'package:smart_wallet/presentation/pages/home_page/widgets/movimentacao_list_view.dart';
 import 'package:smart_wallet/presentation/pages/planos_page/cadastro_plano_screen.dart';
-import 'package:smart_wallet/presentation/pages/planos_page/info_plano_screen.dart';
 
 import '../../../Services/categoria_service.dart';
+import '../../../Services/movimentacao_service.dart';
 import '../../../Services/plano_service.dart';
 import '../../../domain/model/categoria_model.dart';
 import '../../../domain/model/plano_model.dart';
 import '../cadastro_categoria_page/cadastro_categoria_screen.dart';
 import '../common_widgets/custom_bottom_navigation.dart';
+import '../home_page/widgets/card_movimentacao.dart';
 import '../home_page/widgets/card_plano.dart';
 import '../login_page/main_screen.dart';
 
-class PlanosScreen extends StatefulWidget {
-  const PlanosScreen({super.key});
+class InfoPlano extends StatefulWidget {
+  final Plano plano;
+  final String descricao;
+  const InfoPlano({required this.plano, required this.descricao, super.key});
 
   @override
-  State<PlanosScreen> createState() => _PlanosScreenState();
+  State<InfoPlano> createState() => _InfoPlanoState();
 }
 
-class _PlanosScreenState extends State<PlanosScreen> {
+class _InfoPlanoState extends State<InfoPlano> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> CadastroPlano()));
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.black, // Cor do ícone
-        ),
-      ),
       backgroundColor: const Color(0xff10172c),
       appBar: AppBar(
         backgroundColor: const Color(0xff10172c),
@@ -107,46 +99,51 @@ class _PlanosScreenState extends State<PlanosScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          StreamBuilder<List<Categoria>>(
-            stream: CategoriaService().getCategorias(),
-            builder: (context, categoriaSnapshot) {
-              if (categoriaSnapshot.connectionState == ConnectionState.waiting) {
+          StreamBuilder<List<Movimentacao>>(
+            stream: MovimentacaoService().getMovimentacoesByIntervaloDataECategoria(widget.plano.dataInicio, widget.plano.dataFim, widget.plano.idCategoria),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
-              } else if (categoriaSnapshot.hasError) {
-                return Text("Erro: ${categoriaSnapshot.error}");
+              } else if (snapshot.hasError) {
+                return Text("Erro: ${snapshot.error}");
               } else {
-                return StreamBuilder<List<Plano>>(
-                  stream: PlanoService().getPlanos(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text("Erro: ${snapshot.error}");
-                    } else {
-                      return Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ListView(
-                            scrollDirection: Axis.vertical,
-                            children: [
-                              for (var p in snapshot.data!)
-                                GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => InfoPlano(plano: p, descricao: categoriaSnapshot.data!.firstWhere((element) => element.id == p.idCategoria).descricao)));
-                                  },
-                                  child: CardPlanoWidget(
-                                    categoria: categoriaSnapshot.data!.firstWhere((element) => element.id == p.idCategoria).descricao,
-                                    plano: p,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height * 0.15,
-                                  ),
-                                )
-                            ],
-                          ),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    decoration: BoxDecoration(
+                      color: Color(0xff121e3c),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Column(
+                      children: [
+                        CardPlanoWidget(
+                          categoria: widget.descricao,
+                          plano: widget.plano,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.15,
                         ),
-                      );
-                    }
-                  },
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: ListView(
+                              children: [
+                                for(Movimentacao m in snapshot.data!)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: CardMovimentacao(
+                                      movimentacao: m,
+                                      categorias: [Categoria(descricao: widget.descricao, id: m.categoriaId)],
+                                      cor: Color(0xff121e3c),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 );
               }
             },

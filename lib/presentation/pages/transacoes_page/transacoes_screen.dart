@@ -60,12 +60,6 @@ class _TransacoesScreenState extends State<TransacoesScreen> {
                                         Icons.more_horiz,
                                         color: Colors.white,
                                       )),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.notifications,
-                                        color: Colors.white,
-                                      )),
                                 ],
                               ),
                               Row(

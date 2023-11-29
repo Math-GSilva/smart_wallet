@@ -38,6 +38,28 @@ class MovimentacaoService {
     });
   }
 
+  Stream<List<Movimentacao>> getMovimentacoesByIntervaloDataECategoria(DateTime dataInicio, DateTime dataFim, String categoriaId) {
+    return _movimentacoesCollection
+        .where('idUsuario', isEqualTo: getUserId())
+        .snapshots()
+        .map((snapshot) {
+      List<Movimentacao> movimentacoes = snapshot.docs
+          .map((doc) {
+        String idDoDocumento = doc.id;
+
+        return Movimentacao.fromMap(doc.data() as Map<String, dynamic>, idDoDocumento);
+      })
+          .where((movimentacao) =>
+        (movimentacao.data.isAtSameMomentAs(dataInicio) || (movimentacao.data.isAfter(dataInicio) &&
+          movimentacao.data.isBefore(dataFim)) || movimentacao.data.isAtSameMomentAs(dataFim))
+            && movimentacao.categoriaId == categoriaId &&
+          movimentacao.valor < 0)
+          .toList();
+
+      return movimentacoes;
+    });
+  }
+
 
   Future<void> updateMovimentacao(Movimentacao movimentacao) async {
     await _movimentacoesCollection
