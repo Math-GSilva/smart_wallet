@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Movimentacao {
-  int? id;
+  String? id;
   String categoriaId;
-  String data;
+  DateTime data;
   String descricao;
   double valor;
   String tipo;
@@ -15,11 +17,11 @@ class Movimentacao {
     required this.tipo,
   });
 
-  factory Movimentacao.fromMap(Map<String, dynamic> map) {
+  factory Movimentacao.fromMap(Map<String, dynamic> map, String idDoc) {
     return Movimentacao(
-      id: map['id'],
+      id: idDoc,
       categoriaId: map['categoriaId'],
-      data: map['data'],
+      data: (map['data'] as Timestamp).toDate(),
       descricao: map['descricao'],
       valor: map['valor'],
       tipo: map['tipo'],

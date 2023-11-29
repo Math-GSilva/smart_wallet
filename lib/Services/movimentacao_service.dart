@@ -25,11 +25,19 @@ class MovimentacaoService {
     return _movimentacoesCollection
         .where('idUsuario', isEqualTo: getUserId())
         .snapshots()
-        .map((snapshot) => snapshot.docs
-        .map((doc) =>
-        Movimentacao.fromMap(doc.data() as Map<String, dynamic>))
-        .toList());
+        .map((snapshot) {
+      List<Movimentacao> movimentacoes = snapshot.docs
+          .map((doc) {
+        String idDoDocumento = doc.id;
+
+        return Movimentacao.fromMap(doc.data() as Map<String, dynamic>, idDoDocumento);
+      })
+          .toList();
+
+      return movimentacoes;
+    });
   }
+
 
   Future<void> updateMovimentacao(Movimentacao movimentacao) async {
     await _movimentacoesCollection

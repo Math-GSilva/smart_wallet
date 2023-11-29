@@ -98,7 +98,6 @@ class _CustomDropDownState<T> extends State<CustomDropDown<T>> {
                                   if(value != null){
                                     widget.controller.categoriaSelecionada = value;
                                   }
-
                                 });
                               },
                               underline: Container(),

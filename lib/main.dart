@@ -5,6 +5,8 @@ import 'package:smart_wallet/presentation/pages/cadastro_categoria_page/cadastro
 import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
 import 'package:smart_wallet/presentation/pages/login_page/login_screen.dart';
 import 'package:smart_wallet/presentation/pages/login_page/main_screen.dart';
+import 'package:smart_wallet/presentation/pages/planos_page/cadastro_plano_screen.dart';
+import 'package:smart_wallet/presentation/pages/planos_page/planos_screen.dart';
 
 import 'firebase_options.dart';
 

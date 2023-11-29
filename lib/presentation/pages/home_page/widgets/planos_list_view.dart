@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:smart_wallet/Services/movimentacao_service.dart';
-import 'package:smart_wallet/persistance/movimentacao_repository_impl.dart';
+import 'package:smart_wallet/Services/categoria_service.dart';
 
+import '../../../../Services/plano_service.dart';
+import '../../../../domain/model/categoria_model.dart';
+import '../../../../domain/model/plano_model.dart';
 import 'card_plano.dart';
 
-class PlanosListView extends StatefulWidget {
-  const PlanosListView({super.key});
-
-  @override
-  State<PlanosListView> createState() => _PlanosListViewState();
-}
-
-class _PlanosListViewState extends State<PlanosListView> {
-  List<CardPlanoWidget> lista = [];
+class PlanosListView extends StatelessWidget {
+  const PlanosListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,28 +19,47 @@ class _PlanosListViewState extends State<PlanosListView> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Meus Planos",
-                    style: TextStyle(color: Colors.white, fontSize: 18)),
-                Text("Ver tudo",
-                    style: TextStyle(color: Colors.white, fontSize: 18))
+                Text("Meus Planos", style: TextStyle(color: Colors.white, fontSize: 18)),
+                Text("Ver tudo", style: TextStyle(color: Colors.white, fontSize: 18))
               ],
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 120,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: lista.length,
-                      itemBuilder: (context, index) {
-                        return lista[index];
-                      },
-                    ),
-                  ),
-                )
-              ],
-            )
+            StreamBuilder<List<Categoria>>(
+              stream: CategoriaService().getCategorias(),
+              builder: (context, categoriaSnapshot) {
+                if (categoriaSnapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (categoriaSnapshot.hasError) {
+                  return Text("Erro: ${categoriaSnapshot.error}");
+                } else {
+                  return StreamBuilder<List<Plano>>(
+                    stream: PlanoService().getPlanos(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text("Erro: ${snapshot.error}");
+                      } else {
+                        return Container(
+                          height: 120,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              for (var p in snapshot.data!)
+                                CardPlanoWidget(
+                                  categoria: categoriaSnapshot.data!.firstWhere((element) => element.id == p.idCategoria).descricao ?? 'Categoria Desconhecida',
+                                  plano: p,
+                                  height: 100,
+                                  width: 210,
+                                )
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

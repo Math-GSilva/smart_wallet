@@ -7,7 +7,17 @@ class CustomDatePicker extends StatelessWidget {
   final Color corTitle;
   final Color corTexto;
   final TextEditingController controller;
-  const CustomDatePicker({super.key, this.title = "", this.hint = "", this.corTexto = Colors.white, this.corTitle = Colors.white, required this.controller});
+  final bool inicialEFinal;
+
+  const CustomDatePicker({
+    Key? key,
+    this.title = "",
+    this.hint = "",
+    this.corTexto = Colors.white,
+    this.corTitle = Colors.white,
+    required this.controller,
+    this.inicialEFinal = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +39,7 @@ class CustomDatePicker extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom:5, top: 10),
+                      padding: const EdgeInsets.only(bottom: 5, top: 10),
                       child: Text(title, style: TextStyle(color: corTitle, fontSize: 18)),
                     ),
                     Container(
@@ -40,20 +50,31 @@ class CustomDatePicker extends StatelessWidget {
                       child: TextField(
                         focusNode: AlwaysDisabledFocusNode(),
                         controller: controller,
-                        onTap: (){
-                          if(title == "Data"){
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101),
-
-                            ).then((pickedDate) {
-                              if(pickedDate != null) {
-                                controller.text = DateFormat("dd/MM/yyyy").format(pickedDate);
-                              }
-                            });
-                          }
+                        onTap: () {
+                            if (inicialEFinal) {
+                              showDateRangePicker(
+                                context: context,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101),
+                              ).then((pickedDate) {
+                                if (pickedDate != null) {
+                                  String startDate = DateFormat("dd/MM/yyyy").format(pickedDate.start);
+                                  String endDate = DateFormat("dd/MM/yyyy").format(pickedDate.end);
+                                  controller.text = '$startDate - $endDate';
+                                }
+                              });
+                            } else {
+                              showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101),
+                              ).then((pickedDate) {
+                                if (pickedDate != null) {
+                                  controller.text = DateFormat("dd/MM/yyyy").format(pickedDate);
+                                }
+                              });
+                            }
                         },
                         decoration: InputDecoration(
                           filled: true,
@@ -64,7 +85,7 @@ class CustomDatePicker extends StatelessWidget {
                         ),
                         style: TextStyle(color: corTexto),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

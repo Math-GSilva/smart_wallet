@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_wallet/presentation/pages/movimentacao_page/movimentacao_screen.dart';
 import 'package:smart_wallet/presentation/utils/tipo_movimentacao.dart';
 
+import '../../planos_page/cadastro_plano_screen.dart';
 import 'circle_icon.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -69,7 +70,12 @@ class HeaderWidget extends StatelessWidget {
                       color: Colors.white,
                       icon: Icons.add,
                       size: 50,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const CadastroPlano()),
+                        );
+                      },
                     ),
                     CircleIcon(
                         color: Colors.green,

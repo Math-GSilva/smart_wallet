@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smart_wallet/Services/plano_service.dart';
 import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
+import 'package:smart_wallet/presentation/pages/planos_page/planos_screen.dart';
 import 'package:smart_wallet/presentation/pages/transacoes_page/transacoes_screen.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
@@ -30,7 +32,7 @@ class CustomBottomNavigation extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
               break;
             case 3:
-            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const ThanksScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> PlanosScreen()));
               break;
             case 4:
             //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const ThanksScreen()));

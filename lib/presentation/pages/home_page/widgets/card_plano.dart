@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/model/plano_model.dart';
+
 class CardPlanoWidget extends StatelessWidget {
+  final Plano plano;
   final String categoria;
-  final String descricao;
-  final Color cor;
-  final double estimado;
-  final double atual;
-  const CardPlanoWidget({super.key, required this.categoria, required this.descricao, required this.cor, required this.estimado, required this.atual});
+  final double width;
+  final double height;
+  const CardPlanoWidget({super.key, required this.plano, required this.categoria, required this.height, required this.width});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 15 ),
+      padding: const EdgeInsets.only(top: 10),
       child: SizedBox(
-        height: 100,
-        width: 210,
+        height: height,
+        width: width,
         child: Card(
           color: const Color(0xFF121e3c),
           child: Padding(
@@ -27,7 +28,7 @@ class CardPlanoWidget extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          descricao,
+                          plano.descricao,
                           style: const TextStyle(
                               color: Colors.grey
                           ),
@@ -48,19 +49,19 @@ class CardPlanoWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(atual.toStringAsFixed(2), style: const TextStyle(color: Colors.white),),
+                    Text(plano.valorAtual.toStringAsFixed(2), style: const TextStyle(color: Colors.white),),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: LinearProgressIndicator(
-                            color: cor,
-                            value: atual / estimado,
+                            color: Colors.blue,
+                            value: plano.valorAtual/ plano.gastoMax,
                             minHeight: 10,
                             borderRadius: const BorderRadius.all(Radius.circular(10))
                         ),
                       ),
                     ),
-                    Text(estimado.toStringAsFixed(2), style: const TextStyle(color: Colors.white)),
+                    Text(plano.gastoMax.toStringAsFixed(2), style: const TextStyle(color: Colors.white)),
                   ],
                 )
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../domain/model/categoria_model.dart';
 import '../../../../domain/model/movimentacao_model.dart';
@@ -56,7 +57,7 @@ class CardMovimentacao extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text("R\$ ${movimentacao.valor.toStringAsFixed(2)}", textAlign: TextAlign.right ,style: TextStyle(color: movimentacao.valor > 0 ? Colors.green : Colors.red, fontSize: 14)),
-                          Text(movimentacao.data, textAlign: TextAlign.right ,style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          Text(DateFormat("dd/MM/yyyy").format(movimentacao.data), textAlign: TextAlign.right ,style: TextStyle(color: Colors.grey, fontSize: 12)),
                         ],
                       ),
                     )
