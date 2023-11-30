@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 }
 
                 if (!snapshotMovimentacoes.hasData) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
 
                 final List<Movimentacao> listaMovimentacoes = snapshotMovimentacoes.data!;

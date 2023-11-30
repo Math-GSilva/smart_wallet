@@ -3,14 +3,12 @@
 A new Flutter project.
 
 ## Getting Started
+Para começar a utilizar o aplicativo e cadastrar gastos, entradas e planos, é necessário cadastrar as categorias.
+No Drawer do app tem um botão que leva para a tela de cadastro.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Alunos: 
+Matheus Gabriel da Silva.
+Lukas Thiago.
+Larissa Hoffmann.
+Matheus Akira.
+Eduardo da Maia.
