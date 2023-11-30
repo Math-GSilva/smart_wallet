@@ -52,11 +52,12 @@ class _EditTelephoneState extends State<EditTelephone> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
-                              radius: 55,
-                              backgroundColor: Colors.green
+                            backgroundImage: AssetImage("assets/userIcon.png"),
+                            radius: 55,
+                            backgroundColor: Color(0xffe2e6ed),
                           ),
                         ),
-                        Text("Nome do Usuario", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),)
+                        Text(widget.user.nomeUsuario, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 24))
                       ],
                     ),
                   ),

@@ -54,14 +54,13 @@ class UserInfo extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CircleAvatar(
+                              backgroundImage: AssetImage("assets/userIcon.png"),
                               radius: 55,
-                              backgroundColor: Colors.green,
-                              // Você pode adicionar a foto do usuário aqui
+                              backgroundColor: Color(0xffe2e6ed),
                             ),
                           ),
                           Text(
-                            usuario.nomeUsuario,
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                            usuario.nomeUsuario, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 24),
                           ),
                         ],
                       ),
