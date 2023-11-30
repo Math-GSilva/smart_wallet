@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_wallet/presentation/pages/home_page/home_page_screen.dart';
 import 'package:smart_wallet/presentation/pages/login_page/login_controller.dart';
 
+import '../../utils/alerts.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -95,6 +97,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           minimumSize: const Size.fromHeight(50), // NEW
                         ),
                         onPressed: () async {
+                          RegExp emailRegex = RegExp(
+                            r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
+                          );
+                          if(emailController.text.isEmpty || !emailRegex.hasMatch(emailController.text)){
+                            Alerts().showInSnackBar("Informe um e-mail válido!", Colors.red, context);
+                            return;
+                          }
+                          if(senhaController.text.isEmpty){
+                            Alerts().showInSnackBar("Digite sua senha!", Colors.red, context);
+                            return;
+                          }
                           try{
                             var cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
                               email: emailController.text,
@@ -103,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
                           }catch(e){
                             if(e is FirebaseAuthException){
-                              if(e.code == "wrong-password" || e.code == "user-not-found"){
+                              if(e.code == "wrong-password" || e.code == "user-not-found" || e.code == "invalid-email"){
                                 LoginController().showMySnackbar(context, "Senha ou usuário inválido", Colors.red);
                                 return;
                               }
