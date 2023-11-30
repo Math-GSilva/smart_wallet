@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:smart_wallet/Services/movimentacao_service.dart';
 import 'package:smart_wallet/presentation/pages/cadastro_categoria_page/cadastro_categoria_screen.dart';
 import 'package:smart_wallet/presentation/pages/common_widgets/custom_bottom_navigation.dart';
+import 'package:smart_wallet/presentation/pages/common_widgets/default_drawer.dart';
 import 'package:smart_wallet/presentation/pages/home_page/widgets/header_widget.dart';
 import 'package:smart_wallet/presentation/pages/home_page/widgets/movimentacao_list_view.dart';
 import 'package:smart_wallet/presentation/pages/home_page/widgets/planos_list_view.dart';
 import 'package:smart_wallet/presentation/pages/login_page/main_screen.dart';
+import 'package:smart_wallet/presentation/pages/user_info_screen/user_info_screen.dart';
 
 import '../../../domain/model/movimentacao_model.dart';
 import '../../../persistance/movimentacao_repository_impl.dart';
@@ -25,61 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(
-          width: (MediaQuery.of(context).size.width / 2),
-          child: Container(
-            color: const Color(0xff10172c),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Image.asset("assets/logo_clara.png", width: MediaQuery.of(context).size.width / 3),
-                      ),
-                      TextButton(
-                          onPressed: (){},
-                          child: const Text(
-                            "Minha conta",
-                            style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,)),
-                      TextButton(
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => CadastroCategoria()));
-                          },
-                          child: const Text(
-                            "Nova categoria",
-                            style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,))
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: const Color(0xff121e3c),
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size.fromHeight(40), // NEW
-                        ),
-                        onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MainScreen()));
-                        },
-                        child: const Text(
-                          'Sair',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
+        drawer: DefaultDrawer(),
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
             canvasColor: const Color(0xFF121e3c),

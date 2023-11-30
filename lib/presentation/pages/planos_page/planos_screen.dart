@@ -8,6 +8,7 @@ import '../../../domain/model/categoria_model.dart';
 import '../../../domain/model/plano_model.dart';
 import '../cadastro_categoria_page/cadastro_categoria_screen.dart';
 import '../common_widgets/custom_bottom_navigation.dart';
+import '../common_widgets/default_drawer.dart';
 import '../home_page/widgets/card_plano.dart';
 import '../login_page/main_screen.dart';
 
@@ -52,61 +53,7 @@ class _PlanosScreenState extends State<PlanosScreen> {
         title: Text("MEUS PLANOS", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        width: (MediaQuery.of(context).size.width / 2),
-        child: Container(
-          color: const Color(0xff10172c),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Image.asset("assets/logo_clara.png", width: MediaQuery.of(context).size.width / 3),
-                    ),
-                    TextButton(
-                        onPressed: (){},
-                        child: const Text(
-                          "Minha conta",
-                          style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,)),
-                    TextButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CadastroCategoria()));
-                        },
-                        child: const Text(
-                          "Nova categoria",
-                          style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,))
-                  ],
-                ),
-                Column(
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: const Color(0xff121e3c),
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size.fromHeight(40), // NEW
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MainScreen()));
-                      },
-                      child: const Text(
-                        'Sair',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+      drawer: DefaultDrawer(),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: const Color(0xFF121e3c),
