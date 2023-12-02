@@ -67,8 +67,8 @@ class MovimentacaoService {
         .update(movimentacao.toMap());
   }
 
-  Future<void> deleteMovimentacao(int movimentacaoId) async {
-    await _movimentacoesCollection.doc(movimentacaoId.toString()).delete();
+  Future<void> deleteMovimentacao(String movimentacaoId) async {
+    await _movimentacoesCollection.doc(movimentacaoId).delete();
   }
 
 }

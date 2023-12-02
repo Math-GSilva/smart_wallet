@@ -70,7 +70,7 @@ class PlanoService {
         .update(plano.toMap());
   }
 
-  Future<void> deletePlano(int planoId) async {
-    await _planosCollection.doc(planoId.toString()).delete();
+  Future<void> deletePlano(String planoId) async {
+    await _planosCollection.doc(planoId).delete();
   }
 }
